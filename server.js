@@ -4,13 +4,11 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,
-    "https://fair-share-nec08bt5i-mitalisonkiyas-projects.vercel.app/"
-  ],
-  methods: ["GET","POST"],
-  credentials: true
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
 }));
+
 
 
 const bodyParser = require("body-parser");
@@ -57,6 +55,7 @@ app.post("/send-invite", async (req, res) => {
 app.listen(3000, () => {
     console.log("Server running on http://localhost:3000");
 });
+
 
 
 
