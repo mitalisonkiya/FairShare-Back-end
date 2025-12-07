@@ -2,14 +2,10 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,
-    "https://fairshare-oo9djn1e0-mitalisonkiyas-projects.vercel.app"
-  ],
-  methods: ["GET","POST"],
-  credentials: true
+  [origin: process.env.CLIENT_URL,"https://fair-share-nec08bt5i-mitalisonkiyas-projects.vercel.app"]
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
 }));
 
 const bodyParser = require("body-parser");
