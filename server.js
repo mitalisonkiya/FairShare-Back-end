@@ -6,7 +6,7 @@ const cors = require("cors");
 app.use(cors({
   origin: [
     process.env.CLIENT_URL,
-    "https://fairshare-oo9djn1e0-mitalisonkiyas-projects.vercel.app"
+    "https://fair-share-nec08bt5i-mitalisonkiyas-projects.vercel.app/"
   ],
   methods: ["GET","POST"],
   credentials: true
@@ -57,5 +57,6 @@ app.post("/send-invite", async (req, res) => {
 app.listen(3000, () => {
     console.log("Server running on http://localhost:3000");
 });
+
 
 
