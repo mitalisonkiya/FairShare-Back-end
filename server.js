@@ -3,16 +3,14 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+require("dotenv").config();
+
+const app = express();
 app.use(cors({
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
-
-require("dotenv").config();
-
-const app = express();
-app.use(cors());
 app.use(bodyParser.json());
 
 // EMAIL TRANSPORTER
@@ -52,6 +50,7 @@ app.post("/send-invite", async (req, res) => {
 app.listen(3000, () => {
     console.log("Server running on http://localhost:3000");
 });
+
 
 
 
