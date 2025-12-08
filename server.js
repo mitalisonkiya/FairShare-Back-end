@@ -11,7 +11,7 @@ const app = express();
 app.use(cors({
     origin: [
         process.env.CLIENT_URL,
-        "https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/"
+        "https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app"
     ],
     methods: ["GET", "POST"],
     credentials: true
@@ -39,10 +39,12 @@ app.post("/send-invite", async (req, res) => {
             subject: "FairShare Group Invitation",
             html: `
                 <h2>You are invited to FairShare</h2>
-                <p>Click below to join:</p>
-                <a href="https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/">Join FairShare</a>
-                  });
-                res.json({ success: true, message: "Invite sent!" });
+                <p>Click the link below to join:</p>
+                <a href="${process.env.CLIENT_URL}" target="_blank">Join FairShare</a>
+            `
+        });
+
+        res.json({ success: true, message: "Invite sent!" });
 
     } catch (err) {
         console.error(err);
@@ -56,4 +58,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
 });
-            `
