@@ -30,7 +30,7 @@ router.post("/invite", (req, res) => {
                 
                 <p>Click below to join:</p>
 
-                <a href="http://localhost:5000/join-group/${groupName}" 
+                <a href="https://fairshare-backend-3nth.onrender.com/join-group/${groupName}" 
                    style="background:#4e54c8;color:white;padding:10px 18px;text-decoration:none;border-radius:8px;">
                     Join Group
                 </a>
@@ -64,3 +64,4 @@ const mailOptions = {
 
 
 module.exports = router;
+
