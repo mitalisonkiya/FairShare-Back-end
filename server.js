@@ -5,56 +5,62 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+
+// CORS (IMPORTANT AFTER DEPLOYMENT)
+app.use(
+    cors({
+        origin: [
+            process.env.CLIENT_URL, 
+            "https://fairshare-mitali.vercel.app",  // <- CHANGE TO YOUR FRONTEND URL
+        ],
+        methods: ["GET", "POST"],
+        credentials: true,
+    })
+);
+
 app.use(express.json());
 
-// --- CORS FIX ---
-app.use(cors({
-    origin: [
-        process.env.CLIENT_URL,
-        "https://fair-share-puce.vercel.app/"
-    ],
-    methods: ["GET", "POST"],
-}));
-
-// --- GMAIL TRANSPORTER ---
+// EMAIL TRANSPORTER
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // true for port 465
+    service: "gmail",
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+        user: process.env.EMAIL_USER,   // MUST be same as Render env
+        pass: process.env.EMAIL_PASS,   // App password only
+    },
 });
 
-// --- SEND EMAIL ---
+// SEND INVITE ROUTE
 app.post("/send-invite", async (req, res) => {
-    const { email, groupName, joinLink } = req.body;
+    const { email } = req.body;
 
-    if (!email) return res.json({ success: false, message: "No email provided" });
+    if (!email) {
+        return res.status(400).json({ success: false, message: "Email missing" });
+    }
 
     try {
-        await transporter.sendMail({
+        const mailOptions = {
             from: `FairShare <${process.env.EMAIL_USER}>`,
             to: email,
-            subject: `You're invited to join group: ${groupName}`,
+            subject: "FairShare Group Invitation",
             html: `
-                <h2>FairShare Invitation</h2>
-                <p>You have been invited to join <strong>${groupName}</strong></p>
-                <a href="${joinLink}" 
-                style="padding:10px 20px;background:#4CAF50;color:white;text-decoration:none;border-radius:5px;">
-                    Join Group
+                <h2>You are invited to FairShare 🎉</h2>
+                <p>Click below to join:</p>
+                <a href="${process.env.CLIENT_URL}" 
+                   style="padding:12px 20px; background:#4CAF50; color:#fff; text-decoration:none;">
+                    Join FairShare
                 </a>
-            `
-        });
+            `,
+        };
 
-        return res.json({ success: true, message: "Invite sent!" });
+        await transporter.sendMail(mailOptions);
 
+        res.json({ success: true, message: "Invite sent!" });
     } catch (err) {
-        return res.json({ success: false, error: err.message });
+        console.error("Email error:", err);
+        res.status(500).json({ success: false, error: err.message });
     }
 });
 
+// SERVER START
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Server running on PORT", PORT));
-
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
