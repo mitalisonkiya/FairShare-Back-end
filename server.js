@@ -51,9 +51,8 @@ app.post("/send-invite", async (req, res) => {
 });
 
 // START SERVER
-app.listen(3000, () => {
-    console.log("Server running on https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/");
-});
+app.listen("Server running on https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/");
+
 
 
 
