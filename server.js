@@ -34,7 +34,7 @@ app.post("/send-invite", async (req, res) => {
             html: `
                 <h2>You are invited to FairShare</h2>
                 <p>Click below to join:</p>
-                <a href="http://localhost:5500">Join FairShare</a>
+                <a href="https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/">Join FairShare</a>
             `
         });
 
@@ -48,8 +48,9 @@ app.post("/send-invite", async (req, res) => {
 
 // START SERVER
 app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
+    console.log("Server running on https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/");
 });
+
 
 
 
