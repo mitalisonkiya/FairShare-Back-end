@@ -6,9 +6,11 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
+
+// CORS
 app.use(cors({
     origin: [
-        process.env.CLIENT_URL, 
+        process.env.CLIENT_URL,
         "https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/"
     ],
     methods: ["GET", "POST"],
@@ -39,10 +41,8 @@ app.post("/send-invite", async (req, res) => {
                 <h2>You are invited to FairShare</h2>
                 <p>Click below to join:</p>
                 <a href="https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/">Join FairShare</a>
-            `
-        });
-
-        res.json({ success: true, message: "Invite sent!" });
+                  });
+                res.json({ success: true, message: "Invite sent!" });
 
     } catch (err) {
         console.error(err);
@@ -50,15 +50,10 @@ app.post("/send-invite", async (req, res) => {
     }
 });
 
-// START SERVER
-app.listen("Server running on https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/");
+// START SERVER (Render requires this)
+const PORT = process.env.PORT || 3000;
 
-
-
-
-
-
-
-
-
-
+app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`);
+});
+            `
