@@ -7,10 +7,14 @@ require("dotenv").config();
 
 const app = express();
 app.use(cors({
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: [
+        process.env.CLIENT_URL, 
+        "https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/"
+    ],
+    methods: ["GET", "POST"],
     credentials: true
 }));
+
 app.use(bodyParser.json());
 
 // EMAIL TRANSPORTER
@@ -50,6 +54,7 @@ app.post("/send-invite", async (req, res) => {
 app.listen(3000, () => {
     console.log("Server running on https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app/");
 });
+
 
 
 
