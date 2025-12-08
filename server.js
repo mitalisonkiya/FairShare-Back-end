@@ -6,20 +6,10 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
-
-// CORS
-app.use(cors({
-    origin: [
-        process.env.CLIENT_URL,
-        "https://fair-share-bu7jeh2cv-mitalisonkiyas-projects.vercel.app"
-    ],
-    methods: ["GET", "POST"],
-    credentials: true
-}));
-
+app.use(cors());
 app.use(bodyParser.json());
 
-// EMAIL TRANSPORTER
+// EMAIL SENDER SETUP
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -28,33 +18,32 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// SEND INVITE ROUTE
+// ROUTE TO SEND EMAIL INVITE
 app.post("/send-invite", async (req, res) => {
     const { email } = req.body;
 
     try {
         await transporter.sendMail({
-            from: `FairShare <${process.env.EMAIL_USER}>`,
+            from: `"FairShare Invite" <${process.env.EMAIL_USER}>`,
             to: email,
-            subject: "FairShare Group Invitation",
+            subject: "You are invited to FairShare Group",
+            text: "You have been invited to join a group on FairShare!",
             html: `
-                <h2>You are invited to FairShare</h2>
-                <p>Click the link below to join:</p>
-                <a href="${process.env.CLIENT_URL}" target="_blank">Join FairShare</a>
+                <h2>FairShare Group Invitation</h2>
+                <p>You have been invited to join a group on FairShare.</p>
+                <p>Click below to join:</p>
+                <a href="https://fairshare-backend-3nth.onrender.com">Join FairShare</a>
             `
         });
 
-        res.json({ success: true, message: "Invite sent!" });
+        return res.json({ success: true, message: "Invite sent!" });
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, error: err.message });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, error: error.message });
     }
 });
 
-// START SERVER (Render requires this)
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    console.log(`✅ Server running on port ${PORT}`);
+app.listen( () => {
+    console.log("Server running on https://fairshare-backend-3nth.onrender.com");
 });
